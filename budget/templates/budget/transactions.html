@@ -1,0 +1,7 @@
+{% extends 'budget/base.html' %}
+<body>
+{% block body %}
+    <h1>Transactions</h1>
+    <a href="{% url 'budget:make-transaction' %}">Create Transaction</a>
+{% endblock %}
+</body>
