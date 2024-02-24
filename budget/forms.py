@@ -19,7 +19,7 @@ class BudgetCategoryForm(forms.ModelForm):
 class BudgetLabelForm(forms.ModelForm):
     class Meta:
         model = BudgetLabel
-        fields = ['label', 'planned', 'received', 'due_date', 'notes']
+        fields = ['category','label', 'planned', 'received', 'due_date', 'notes']
 
 class TransactionForm(forms.ModelForm):
     class Meta:

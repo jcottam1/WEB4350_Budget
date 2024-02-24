@@ -1,0 +1,17 @@
+{% extends 'budget/base.html' %}
+<body>
+{% block body %}
+    Category: {{ category.category_name }}
+
+    <p><a href="{% url 'budget:make-label' %}">Add Sub-Category</a></p>
+
+    <h2>Sub-Categories</h2>
+    {% for label in labels %}
+        {% if label.category == category %}
+            <p>Name:{{ label.label }}</p>
+            <p>Planned: {{ label.planned }}</p>
+            <p>Received: {{ label.received }}</p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+</body>

@@ -2,7 +2,10 @@
 <body>
 {% block body %}
     <h1>Budget</h1>
-    <a href="{% url 'budget:make-budget' %}">Create Budget</a>
-    <a href="{% url 'budget:make-category' %}">Create Category</a>
+    <p><a href="{% url 'budget:make-budget' %}">Create Budget</a></p>
+    <p><a href="{% url 'budget:make-category' %}">Create Category</a></p>
+    {% for category in categories %}
+        Category: {{ category.category_name }} <p><a href="{% url 'budget:view_category' category.id %}">View Category</a></p>
+    {% endfor %}
 {% endblock %}
 </body>

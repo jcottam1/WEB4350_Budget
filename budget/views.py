@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from .forms import BudgetForm, MonthForm, BudgetCategoryForm, BudgetLabelForm, TransactionForm
+from .models import Budget, BudgetCategory, BudgetLabel
 
 
 # Create your views here.
@@ -11,7 +12,11 @@ def index(request):
 
 @login_required(login_url='login')
 def budget(request):
-    return render(request, 'budget/budget.html')
+    categories = BudgetCategory.objects.all()
+    context = {
+        'categories': categories
+    }
+    return render(request, 'budget/budget.html', context)
 
 @login_required(login_url='login')
 def make_budget(request):
@@ -42,6 +47,15 @@ def make_category(request):
         form = BudgetCategoryForm()
     return render(request, 'budget/form.html', {"form": form})
 
+def view_category(request, id):
+    category = BudgetCategory.objects.get(id=id)
+    labels = BudgetLabel.objects.all()
+    context = {
+        'category': category,
+        'labels': labels
+    }
+    return render(request, 'budget/view_category.html', context)
+
 @login_required(login_url='login')
 def make_label(request):
     if request.method == "POST":
@@ -49,7 +63,7 @@ def make_label(request):
         if form.is_valid():
             f = form.save(commit=False)
             f.save()
-            return redirect('budget:label')
+            return redirect('budget:category')
     else:
         form = BudgetLabelForm()
     return render(request, 'budget/form.html', {"form": form})
