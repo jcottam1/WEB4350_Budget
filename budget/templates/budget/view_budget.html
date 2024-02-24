@@ -1,0 +1,15 @@
+{% extends 'budget/base.html' %}
+<body>
+{% block body %}
+    Budget: {{ budget.budget_name }}
+
+    <p><a href="{% url 'budget:make-category' budget.id %}">Add Category</a></p>
+
+    <h2>Categories</h2>
+    {% for category in categories %}
+        {% if category.budget == budget %}
+            Category: {{ category.category_name }} <p><a href="{% url 'budget:view_category' category.id %}">View Category</a></p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+</body>

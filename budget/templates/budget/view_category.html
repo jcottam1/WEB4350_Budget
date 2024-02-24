@@ -3,7 +3,7 @@
 {% block body %}
     Category: {{ category.category_name }}
 
-    <p><a href="{% url 'budget:make-label' %}">Add Sub-Category</a></p>
+    <p><a href="{% url 'budget:make-label' category.id %}">Add Sub-Category</a></p>
 
     <h2>Sub-Categories</h2>
     {% for label in labels %}
@@ -11,6 +11,7 @@
             <p>Name:{{ label.label }}</p>
             <p>Planned: {{ label.planned }}</p>
             <p>Received: {{ label.received }}</p>
+            <p>Due Date: {{ label.due_date }}</p>
         {% endif %}
     {% endfor %}
 {% endblock %}

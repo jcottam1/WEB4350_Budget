@@ -1,6 +1,10 @@
 from django import forms
 from budget.models import Budget, Month, BudgetCategory, BudgetLabel, Transaction
 
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
@@ -19,7 +23,10 @@ class BudgetCategoryForm(forms.ModelForm):
 class BudgetLabelForm(forms.ModelForm):
     class Meta:
         model = BudgetLabel
-        fields = ['category','label', 'planned', 'received', 'due_date', 'notes']
+        fields = ['label', 'planned', 'received', 'due_date', 'notes']
+        widgets = {
+            'due_date': DateInput()
+        }
 
 class TransactionForm(forms.ModelForm):
     class Meta:

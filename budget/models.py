@@ -8,8 +8,12 @@ class Month(models.Model):
         return f"Month: {self.month}"
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    budget_name = models.CharField(max_length=100)
     total_budget = models.DecimalField(max_digits=10, decimal_places=2)
     month = models.ForeignKey(Month, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.budget_name
 
 
 

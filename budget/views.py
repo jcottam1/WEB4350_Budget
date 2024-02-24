@@ -12,9 +12,9 @@ def index(request):
 
 @login_required(login_url='login')
 def budget(request):
-    categories = BudgetCategory.objects.all()
+    budgets = Budget.objects.all()
     context = {
-        'categories': categories
+        'budgets': budgets
     }
     return render(request, 'budget/budget.html', context)
 
@@ -31,18 +31,28 @@ def make_budget(request):
         form = BudgetForm()
     return render(request, 'budget/form.html', {"form": form})
 
+def view_budget(request, id):
+    budget = Budget.objects.get(id=id)
+    categories = BudgetCategory.objects.all()
+    context = {
+        'budget': budget,
+        'categories': categories
+    }
+    return render(request, 'budget/view_budget.html', context)
+
 @login_required(login_url='login')
 def category(request):
     return render(request, 'budget/category.html')
 
 @login_required(login_url='login')
-def make_category(request):
+def make_category(request, id):
     if request.method == "POST":
         form = BudgetCategoryForm(request.POST, request.FILES)
         if form.is_valid():
             f = form.save(commit=False)
+            f.budget = Budget.objects.get(id=id)
             f.save()
-            return redirect('budget:budget')
+            return redirect('budget:view_budget', id)
     else:
         form = BudgetCategoryForm()
     return render(request, 'budget/form.html', {"form": form})
@@ -57,13 +67,14 @@ def view_category(request, id):
     return render(request, 'budget/view_category.html', context)
 
 @login_required(login_url='login')
-def make_label(request):
+def make_label(request, id):
     if request.method == "POST":
         form = BudgetLabelForm(request.POST, request.FILES)
         if form.is_valid():
             f = form.save(commit=False)
+            f.category = BudgetCategory.objects.get(id=id)
             f.save()
-            return redirect('budget:category')
+            return redirect('budget:view_category', id)
     else:
         form = BudgetLabelForm()
     return render(request, 'budget/form.html', {"form": form})
