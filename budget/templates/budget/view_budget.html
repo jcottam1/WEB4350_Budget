@@ -1,14 +1,23 @@
 {% extends 'budget/base.html' %}
 <body>
 {% block body %}
-    Budget: {{ budget.budget_name }}
+    <p>Budget: {{ budget.budget_name }}</p>
+    <p>Amount: {{ budget.total_budget }}</p>
+    <p>Month: {{ budget.month }}</p>
+
+    <p><a href="{% url 'budget:edit_budget' budget.id %}">Edit Budget</a></p>
+    <p><a href="{% url 'budget:delete_budget' budget.id %}">Delete Budget</a></p>
 
     <p><a href="{% url 'budget:make-category' budget.id %}">Add Category</a></p>
 
     <h2>Categories</h2>
     {% for category in categories %}
         {% if category.budget == budget %}
-            Category: {{ category.category_name }} <p><a href="{% url 'budget:view_category' category.id %}">View Category</a></p>
+            <p>Category: {{ category.category_name }}<a href="{% url 'budget:view_category' category.id %}">View Category</a></p>
+            <p>Planned: {{ category.planned }}</p>
+            <p>Received: {{ category.received }}</p>
+            <p><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></p>
+            <p><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></p>
         {% endif %}
     {% endfor %}
 {% endblock %}

@@ -20,6 +20,8 @@ class Budget(models.Model):
 class BudgetCategory(models.Model):
     category_name = models.CharField(max_length=100)
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    planned = models.DecimalField(max_digits=10, decimal_places=2)
+    received = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.category_name
@@ -30,7 +32,7 @@ class BudgetLabel(models.Model):
     planned = models.DecimalField(max_digits=10, decimal_places=2)
     received = models.DecimalField(max_digits=10, decimal_places=2)
     due_date = models.DateField()
-    notes = models.CharField(max_length=100)
+    notes = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.label
@@ -38,6 +40,9 @@ class BudgetLabel(models.Model):
 class Transaction(models.Model):
     label = models.ForeignKey(BudgetLabel, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    incoming = models.BooleanField(default=False)
+    outgoing = models.BooleanField(default=False)
+    transaction_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Amount: {self.amount}"
+        return self.transaction_name

@@ -2,6 +2,10 @@
 <body>
 {% block body %}
     Category: {{ category.category_name }}
+    <p>Planned: {{ category.planned }}</p>
+    <p>Received: {{ category.received }}</p>
+    <p><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></p>
+    <p><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></p>
 
     <p><a href="{% url 'budget:make-label' category.id %}">Add Sub-Category</a></p>
 
@@ -12,6 +16,8 @@
             <p>Planned: {{ label.planned }}</p>
             <p>Received: {{ label.received }}</p>
             <p>Due Date: {{ label.due_date }}</p>
+            <p><a href="{% url 'budget:edit_label' label.id %}">Edit Label</a></p>
+            <p><a href="{% url 'budget:delete_label' label.id %}">Delete Label</a></p>
         {% endif %}
     {% endfor %}
 {% endblock %}

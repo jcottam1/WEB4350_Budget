@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from .forms import BudgetForm, MonthForm, BudgetCategoryForm, BudgetLabelForm, TransactionForm
-from .models import Budget, BudgetCategory, BudgetLabel
+from .models import Budget, BudgetCategory, BudgetLabel, Transaction
 
 
 # Create your views here.
@@ -31,6 +31,29 @@ def make_budget(request):
         form = BudgetForm()
     return render(request, 'budget/form.html', {"form": form})
 
+@login_required
+def edit_budget(request, id):
+    budget = Budget.objects.get(id=id)
+    form = BudgetForm(request.POST or None, instance=budget)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.user = request.user
+        f.save()
+        return redirect('budget:view_budget', id)
+    else:
+        form = form
+
+    return render(request, 'budget/form.html', {"form": form, 'budget': budget})
+
+def delete_budget(request, id):
+    budget = Budget.objects.get(id=id)
+
+    if request.method == "POST":
+        budget.delete()
+        return redirect('budget:budget')
+
+    return render(request, 'budget/delete.html', {'budget': budget})
+
 def view_budget(request, id):
     budget = Budget.objects.get(id=id)
     categories = BudgetCategory.objects.all()
@@ -39,10 +62,6 @@ def view_budget(request, id):
         'categories': categories
     }
     return render(request, 'budget/view_budget.html', context)
-
-@login_required(login_url='login')
-def category(request):
-    return render(request, 'budget/category.html')
 
 @login_required(login_url='login')
 def make_category(request, id):
@@ -56,6 +75,29 @@ def make_category(request, id):
     else:
         form = BudgetCategoryForm()
     return render(request, 'budget/form.html', {"form": form})
+
+
+@login_required
+def edit_category(request, id):
+    category = BudgetCategory.objects.get(id=id)
+    form = BudgetCategoryForm(request.POST or None, instance=category)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        return redirect('budget:view_category', id)
+    else:
+        form = form
+
+    return render(request, 'budget/form.html', {"form": form, 'category': category})
+
+def delete_category(request, id):
+    category = BudgetCategory.objects.get(id=id)
+
+    if request.method == "POST":
+        category.delete()
+        return redirect('budget:view_budget', category.budget.id)
+
+    return render(request, 'budget/delete.html', {'category': category})
 
 def view_category(request, id):
     category = BudgetCategory.objects.get(id=id)
@@ -79,13 +121,39 @@ def make_label(request, id):
         form = BudgetLabelForm()
     return render(request, 'budget/form.html', {"form": form})
 
+@login_required
+def edit_label(request, id):
+    label = BudgetLabel.objects.get(id=id)
+    form = BudgetLabelForm(request.POST or None, instance=label)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        return redirect('budget:view_category', label.category.id)
+    else:
+        form = form
+
+    return render(request, 'budget/form.html', {"form": form, 'label': label})
+
+def delete_label(request, id):
+    label = BudgetLabel.objects.get(id=id)
+
+    if request.method == "POST":
+        label.delete()
+        return redirect('budget:view_category', label.category.id)
+
+    return render(request, 'budget/delete.html', {'label': label})
+
 @login_required(login_url='login')
 def reports(request):
     return render(request, 'budget/reports.html')
 
 @login_required(login_url='login')
 def transactions(request):
-    return render(request, 'budget/transactions.html')
+    transactions = Transaction.objects.all()
+    context = {
+        'transactions': transactions
+    }
+    return render(request, 'budget/transactions.html', context)
 
 @login_required(login_url='login')
 def make_transaction(request):
@@ -98,3 +166,25 @@ def make_transaction(request):
     else:
         form = TransactionForm()
     return render(request, 'budget/form.html', {"form": form})
+
+@login_required
+def edit_transaction(request, id):
+    transaction = Transaction.objects.get(id=id)
+    form = TransactionForm(request.POST or None, instance=transaction)
+    if form.is_valid():
+        f = form.save(commit=False)
+        f.save()
+        return redirect('budget:transactions')
+    else:
+        form = form
+
+    return render(request, 'budget/form.html', {"form": form, 'transaction': transaction})
+
+def delete_transaction(request, id):
+    transaction = Transaction.objects.get(id=id)
+
+    if request.method == "POST":
+        transaction.delete()
+        return redirect('budget:transactions')
+
+    return render(request, 'budget/delete.html', {'transaction': transaction})

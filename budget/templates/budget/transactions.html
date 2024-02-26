@@ -3,5 +3,18 @@
 {% block body %}
     <h1>Transactions</h1>
     <a href="{% url 'budget:make-transaction' %}">Create Transaction</a>
+    {% for transaction in transactions %}
+        <h2>Name: {{ transaction.transaction_name }}</h2>
+        <p>Label: {{ transaction.label }}</p>
+        <p>Amount: {{ transaction.amount }}</p>
+        {% if transaction.incoming == True %}
+            <p>Incoming</p>
+        {% elif transaction.outgoing == False %}
+            <p>Outgoing</p>
+        {% endif %}
+
+        <p><a href="{% url 'budget:edit_transaction' transaction.id %}">Edit Transaction</a></p>
+            <p><a href="{% url 'budget:delete_label' transaction.id %}">Delete Transaction</a></p>
+    {% endfor %}
 {% endblock %}
 </body>
