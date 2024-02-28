@@ -31,7 +31,7 @@ def make_budget(request):
         form = BudgetForm()
     return render(request, 'budget/form.html', {"form": form})
 
-@login_required
+@login_required(login_url='login')
 def edit_budget(request, id):
     budget = Budget.objects.get(id=id)
     form = BudgetForm(request.POST or None, instance=budget)
@@ -45,6 +45,7 @@ def edit_budget(request, id):
 
     return render(request, 'budget/form.html', {"form": form, 'budget': budget})
 
+@login_required(login_url='login')
 def delete_budget(request, id):
     budget = Budget.objects.get(id=id)
 
@@ -54,6 +55,7 @@ def delete_budget(request, id):
 
     return render(request, 'budget/delete.html', {'budget': budget})
 
+@login_required(login_url='login')
 def view_budget(request, id):
     budget = Budget.objects.get(id=id)
     categories = BudgetCategory.objects.all()
@@ -90,6 +92,7 @@ def edit_category(request, id):
 
     return render(request, 'budget/form.html', {"form": form, 'category': category})
 
+@login_required(login_url='login')
 def delete_category(request, id):
     category = BudgetCategory.objects.get(id=id)
 
@@ -99,6 +102,7 @@ def delete_category(request, id):
 
     return render(request, 'budget/delete.html', {'category': category})
 
+@login_required(login_url='login')
 def view_category(request, id):
     category = BudgetCategory.objects.get(id=id)
     labels = BudgetLabel.objects.all()
@@ -121,7 +125,7 @@ def make_label(request, id):
         form = BudgetLabelForm()
     return render(request, 'budget/form.html', {"form": form})
 
-@login_required
+@login_required(login_url='login')
 def edit_label(request, id):
     label = BudgetLabel.objects.get(id=id)
     form = BudgetLabelForm(request.POST or None, instance=label)
@@ -134,6 +138,7 @@ def edit_label(request, id):
 
     return render(request, 'budget/form.html', {"form": form, 'label': label})
 
+@login_required(login_url='login')
 def delete_label(request, id):
     label = BudgetLabel.objects.get(id=id)
 
@@ -167,7 +172,7 @@ def make_transaction(request):
         form = TransactionForm()
     return render(request, 'budget/form.html', {"form": form})
 
-@login_required
+@login_required(login_url='login')
 def edit_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
     form = TransactionForm(request.POST or None, instance=transaction)
@@ -180,6 +185,7 @@ def edit_transaction(request, id):
 
     return render(request, 'budget/form.html', {"form": form, 'transaction': transaction})
 
+@login_required(login_url='login')
 def delete_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
 
