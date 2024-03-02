@@ -4,21 +4,38 @@
     Category: {{ category.category_name }}
     <p>Planned: {{ category.planned }}</p>
     <p>Received: {{ category.received }}</p>
-    <p><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></p>
-    <p><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></p>
-
-    <p><a href="{% url 'budget:make-label' category.id %}">Add Sub-Category</a></p>
+    <button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button>
+    <button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button>
 
     <h2>Sub-Categories</h2>
+    <table>
+    <thead>
+    <tr>
+        <th>Category Breakdown</th>
+        <th>Planned</th>
+        <th>Received</th>
+        <th>Notes</th>
+        <th>Due Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for label in labels %}
+        <tr>
         {% if label.category == category %}
-            <p>Name:{{ label.label }}</p>
-            <p>Planned: {{ label.planned }}</p>
-            <p>Received: {{ label.received }}</p>
-            <p>Due Date: {{ label.due_date }}</p>
-            <p><a href="{% url 'budget:edit_label' label.id %}">Edit Label</a></p>
-            <p><a href="{% url 'budget:delete_label' label.id %}">Delete Label</a></p>
+            <td>{{ label.label }}</td>
+            <td>{{ label.planned }}</td>
+            <td>{{ label.received }}</td>
+            <td>{{ label.notes }}</td>
+            <td>{{ label.due_date }}</td>
+            <td><button><a href="{% url 'budget:edit_label' label.id %}">Edit Label</a></button></td>
+            <td><button><a href="{% url 'budget:delete_label' label.id %}">Delete Label</a></button></td>
         {% endif %}
+        </tr>
     {% endfor %}
+    </tbody>
+    </table>
+    <button><a href="{% url 'budget:make-label' category.id %}">Add Sub-Category</a></button>
 {% endblock %}
 </body>

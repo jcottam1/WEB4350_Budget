@@ -45,11 +45,11 @@
         {% for category in categories %}
             <tr>
             {% if category.budget == budget %}
-                <td>Category: {{ category.category_name }}<a href="{% url 'budget:view_category' category.id %}">View Category</a></td>
+                <td>Category: {{ category.category_name }} <button><a href="{% url 'budget:view_category' category.id %}">View Category</a></button></td>
                 <td>Planned: {{ category.planned }}</td>
                 <td>Received: {{ category.received }}</td>
-                <td><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></td>
-                <td><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></td>
+                <td><button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button></td>
+                <td><button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button></td>
             {% endif %}
             </tr>
         {% endfor %}
