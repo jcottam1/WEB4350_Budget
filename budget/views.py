@@ -13,8 +13,10 @@ def index(request):
 @login_required(login_url='login')
 def budget(request):
     budgets = Budget.objects.all()
+    categories = BudgetCategory.objects.all()
     context = {
-        'budgets': budgets
+        'budgets': budgets,
+        'categories': categories
     }
     return render(request, 'budget/budget.html', context)
 
