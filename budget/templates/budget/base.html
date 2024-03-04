@@ -12,48 +12,60 @@
     <link rel="stylesheet" href="{% static 'budget/styles.css' %}">
     <title>Document</title>
 </head>
-<body>
-    <nav class="navbar bg-dark">
-        {% if user.is_authenticated %}
-            <div class="">
-                <img src="{% static 'images/logo.png' %}" alt="Logo" style="width: 10rem";>
-            </div>
-            <a href="{% url 'budget:index' %}" class="nav-item nav-link h5 mb-0">Dashboard</a>
-            <a href="{% url 'budget:budget' %}" class="nav-item nav-link h5 mb-0">Budget</a>
-            <a href="{% url 'budget:transactions' %}" class="nav-item nav-link h5 mb-0">Transactions</a>
-            <a href="{% url 'budget:reports' %}" class="nav-item nav-link h5 mb-0">Reports</a>
-            <a href="{% url 'logout' %}" class="nav-item nav-link h5 mb-0">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="nav-item nav-link h5 mb-0">Login</a>
-            <a href="{% url 'register' %}" class="nav-item nav-link h5 mb-0">Register</a>
-        {% endif %}
-    </nav>
+<body class="{{bodyClass}}">
+        <div class="body-content">
+            <nav class="navbar navbar-dark bg-dark">
+                <div class="">
+                    <img src="{% static 'images/logo.png'%}" alt="Logo" style="width:10rem";>
+                </div>
+                <div class="navbar">
+                {% if user.is_authenticated %}
+                    <a href="{%  url 'budget:index' %}"  class="nav-item nav-link links {% if nbar == 'dashboard' %}nav-active{% else %}nav-inactive{% endif %}">Dashboard</a>
+                    <a href="{%  url 'budget:budget' %}"  class="nav-item nav-link links {% if nbar == 'budget' %}nav-active{% else %}nav-inactive{% endif %}">Budget</a>
+                    <a href="{%  url 'budget:transactions' %}"  class="nav-item nav-link links {% if nbar == 'transactions' %}nav-active{% else %}nav-inactive{% endif %}">Transactions</a>
+                    <a href="{%  url 'budget:reports' %}"  class="nav-item nav-link links {% if nbar == 'reports' %}nav-active{% else %}nav-inactive{% endif %}">Reports</a>
+                    <a href="{%  url 'logout' %}"  class="nav-item nav-link links {% if nbar == 'reports' %}nav-active{% else %}nav-inactive{% endif %}">Logout</a>
+                </div>
+                {% else %}
+                    <a href="{%  url 'login' %}"  class="nav-item nav-link links {% if nbar == 'login' %}nav-active{% else %}nav-inactive{% endif %}">Login</a>
+                    <a href="{%  url 'register' %}"  class="nav-item nav-link links {% if nbar == 'register' %}nav-active{% else %}nav-inactive{% endif %}">Register</a>
+                {% endif %}
+            </nav>
 
-     <footer class="bg-dark mt-5 pt-4 pb-1 fixed-bottom">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}"></div>
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+
+            {% block body %}
+            {% endblock %}
+        </div>
+        <footer class="bg-dark mt-5 pt-4 pb-1 fixed-bottom">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-6">
-                        <div class="d-flex justify-content-center mt-3">
-                            <img src="{% static 'images/logo.png' %}" alt="Logo" style="width: 25rem";>
-                        </div>
+                        <div class=" mt-3">
+                            <img src="{% static 'images/logo.png'%}"alt="Logo"style="width:25rem";>
+                         </div>
                     </div>
-                    <div class="col-6 text-white my-auto">
+                     <div class="col-6text-white my-auto">
 
                         <ul class="">
-                            <li class="list-unstyled h5">everypenny@example.com</li>
-                            <li class="list-unstyled h5">801-123-4567</li>
-                            <li class="list-unstyled h5">everypenny.com</li>
+                            <li class="list-unstyled h5 text-white">everypenny@example.com</li>
+                            <li class="list-unstyled h5 text-white">801-123-4567</li>
+                            <li class="list-unstyled h5 text-white">everypenny.com</li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
-                    <p class="col-12 text-center text-white mt-5">Copyright 2024 | Every Penny</p>
-                </div>
+                     <p class="col-12 text-center text-white mt-5">Copyright2024 | EveryPenny</p>
+                 </div>
             </div>
         </footer>
 
-{% block body %}
-{% endblock %}
 <footer class="bg-primary"><p>everypenny@example.com</p></footer>
+
 </body>
 </html>
