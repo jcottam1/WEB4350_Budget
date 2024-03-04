@@ -15,3 +15,13 @@
 .background {
     background-color: lightcyan;
 }
+
+.button-color {
+    background-color: rebeccapurple;
+    color: white;
+}
+
+.button-delete {
+    background-color: red;
+    color: white;
+}
