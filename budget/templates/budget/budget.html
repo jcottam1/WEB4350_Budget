@@ -1,7 +1,10 @@
 {% extends 'budget/base.html' %}
 <body>
 {% block body %}
-    <h1>Budget</h1>
+    <div class="container">
+        <h1 class="mt-5 display-4">Budget</h1>
+        <hr>
+    </div>
     <button><a href="{% url 'budget:make-budget' %}">Create Budget</a></button>
     <br>
     {% for budget in budgets %}
