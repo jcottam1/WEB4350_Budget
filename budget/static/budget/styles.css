@@ -3,6 +3,11 @@
     margin-left: 3rem;
 }
 
+.links:hover {
+    color: pink;
+}
+
 .nav-active {
-    color: red;
+    color: lightgrey;
+    text-decoration: underline;
 }
