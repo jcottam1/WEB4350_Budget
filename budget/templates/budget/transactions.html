@@ -4,38 +4,44 @@
     <div class="container">
         <h1 class="mt-5 display-4">Transactions</h1>
         <hr>
-    </div>
-    <a href="{% url 'budget:make-transaction' %}">Create Transaction</a>
-    <table>
-    <thead>
-    <tr>
-        <th>Transactions</th>
-        <th>Date</th>
-        <th>Label</th>
-        <th>Amount</th>
-        <th>In or Out?</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for transaction in transactions %}
-            <tr>
-            <td>{{ transaction.transaction_name }}</td>
-            <td>Date</td>
-            <td>{{ transaction.label }}</td>
-            <td>{{ transaction.amount }}</td>
-            {% if transaction.incoming == True %}
-                <td>Incoming</td>
-            {% elif transaction.outgoing == False %}
-                <td>Outgoing</td>
-            {% endif %}
 
-            <td><button><a href="{% url 'budget:edit_transaction' transaction.id %}">Edit Transaction</a></button></td>
-                <td><button><a href="{% url 'budget:delete_label' transaction.id %}">Delete Transaction</a></button></td>
-            </tr>
-        {% endfor %}
-    </tbody>
-    </table>
+        <a href="{% url 'budget:make-transaction' %}">Create Transaction</a>
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Transactions</th>
+                        <th>Date</th>
+                        <th>Label</th>
+                        <th>Amount</th>
+                        <th>In or Out?</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                            <td>{{ transaction.transaction_name }}</td>
+                            <td>Date</td>
+                            <td>{{ transaction.label }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            {% if transaction.incoming == True %}
+                                <td>Incoming</td>
+                            {% elif transaction.outgoing == False %}
+                                <td>Outgoing</td>
+                            {% endif %}
+
+                            <td><button><a href="{% url 'budget:edit_transaction' transaction.id %}">Edit Transaction</a></button></td>
+                                <td><button><a href="{% url 'budget:delete_label' transaction.id %}">Delete Transaction</a></button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 </body>

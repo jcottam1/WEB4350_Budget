@@ -4,59 +4,73 @@
     <div class="container">
         <h1 class="mt-5 display-4">Budget</h1>
         <hr>
-    </div>
-    <button><a href="{% url 'budget:make-budget' %}">Create Budget</a></button>
-    <br>
-    {% for budget in budgets %}
+
+        <button><a href="{% url 'budget:make-budget' %}">Create Budget</a></button>
+        <br>
+        {% for budget in budgets %}
         <p>Budget: {{ budget.budget_name }} <button><a href="{% url 'budget:view_budget' budget.id %}">View Budget</a></button>
             <h2>Planned Income</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Income</th>
-                <th>Planned</th>
-                <th>Received</th>
-            </tr>
-        </thead>
-    <tbody>
-        <tr>
-            <td>Day Job</td>
-            <td>$3,000.00</td>
-            <td>$3,000.00</td>
-        </tr>
-    <tr>
-        <td>Babysitting</td>
-        <td>$3,000.00</td>
-        <td>$0.00.00</td>
-    </tr>
-    </tbody>
-    </table>
-    <button>Add Planned Income</button>
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Income</th>
+                                <th>Planned</th>
+                                <th>Received</th>
+                            </tr>
+                        </thead>
 
-    <h2>Categories</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Budget Categories</th>
-            <th>Budgeted</th>
-            <th>Remaining</th>
-        </tr>
-        </thead>
-    <tbody>
-        {% for category in categories %}
-            <tr>
-            {% if category.budget == budget %}
-                <td>Category: {{ category.category_name }} <button><a href="{% url 'budget:view_category' category.id %}">View Category</a></button></td>
-                <td>Planned: {{ category.planned }}</td>
-                <td>Received: {{ category.received }}</td>
-                <td><button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button></td>
-                <td><button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button></td>
-            {% endif %}
-            </tr>
-        {% endfor %}
-    </tbody>
-    </table>
-    <button><a href="{% url 'budget:make-category' budget.id %}">Add Category</a></button>
+                        <tbody>
+
+                            <tr>
+                                <td>Day Job</td>
+                                <td>$3,000.00</td>
+                                <td>$3,000.00</td>
+                            </tr>
+                        <tr>
+                            <td>Babysitting</td>
+                            <td>$3,000.00</td>
+                            <td>$0.00.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                     <button>Add Planned Income</button>
+                </div>
+            </div>
+
+
+            <h2 class="mt-5">Categories</h2>
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Budget Categories</th>
+                            <th>Budgeted</th>
+                            <th>Remaining</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+
+                                {% if category.budget == budget %}
+                                    <td>Category: {{ category.category_name }} <button><a href="{% url 'budget:view_category' category.id %}">View Category</a></button></td>
+                                    <td>Planned: {{ category.planned }}</td>
+                                    <td>Received: {{ category.received }}</td>
+                                    <td><button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button></td>
+                                    <td><button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button></td>
+                                {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <button><a href="{% url 'budget:make-category' budget.id %}">Add Category</a></button>
+                </div>
+            </div>
+            </div>
     {% endfor %}
 {% endblock %}
 </body>
