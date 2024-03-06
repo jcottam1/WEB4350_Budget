@@ -8,7 +8,11 @@ from .models import Budget, BudgetCategory, BudgetLabel, Transaction
 
 # Create your views here.
 def index(request):
-    return render(request, 'budget/index.html')
+    transactions = Transaction.objects.all()
+    context = {
+        'transactions': transactions
+    }
+    return render(request, 'budget/index.html', context)
 
 @login_required(login_url='login')
 def budget(request):
@@ -196,3 +200,4 @@ def delete_transaction(request, id):
         return redirect('budget:transactions')
 
     return render(request, 'budget/delete.html', {'transaction': transaction})
+

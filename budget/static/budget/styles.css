@@ -13,11 +13,11 @@
 }
 
 .background {
-    background-color: lightcyan;
+    background-color: #D7E4E8;
 }
 
 .button-color {
-    background-color: rebeccapurple;
+    background-color: #635D8C;
     color: white;
 }
 
@@ -25,3 +25,25 @@
     background-color: red;
     color: white;
 }
+
+.dash-small-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.index-card {
+    width: 450px;
+}
+
+ .dash-balance-rows {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+ }
+
+ .dash-balance-number {
+     margin-left: auto;
+ }
+
