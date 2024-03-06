@@ -4,13 +4,16 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Month(models.Model):
     month = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
     def __str__(self):
-        return f"Month: {self.month}"
+        return self.name
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     budget_name = models.CharField(max_length=100)
     total_budget = models.DecimalField(max_digits=10, decimal_places=2)
-    month = models.ForeignKey(Month, on_delete=models.CASCADE)
+    month = models.OneToOneField(Month, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.budget_name

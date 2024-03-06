@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from .forms import BudgetForm, MonthForm, BudgetCategoryForm, BudgetLabelForm, TransactionForm
-from .models import Budget, BudgetCategory, BudgetLabel, Transaction
+from .models import Budget, BudgetCategory, BudgetLabel, Transaction, Month
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -18,23 +19,25 @@ def index(request):
 def budget(request):
     budgets = Budget.objects.all()
     categories = BudgetCategory.objects.all()
+    months = Month.objects.all()
     context = {
         'budgets': budgets,
-        'categories': categories
+        'categories': categories,
+        'months': months
     }
     return render(request, 'budget/budget.html', context)
 
 @login_required(login_url='login')
 def make_budget(request):
     if request.method == "POST":
-        form = BudgetForm(request.POST, request.FILES)
+        form = BudgetForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             f = form.save(commit=False)
             f.user = request.user
             f.save()
             return redirect('budget:budget')
     else:
-        form = BudgetForm()
+        form = BudgetForm(user=request.user)
     return render(request, 'budget/form.html', {"form": form})
 
 @login_required(login_url='login')
@@ -65,9 +68,11 @@ def delete_budget(request, id):
 def view_budget(request, id):
     budget = Budget.objects.get(id=id)
     categories = BudgetCategory.objects.all()
+    months = Month.objects.all()
     context = {
         'budget': budget,
-        'categories': categories
+        'categories': categories,
+        'months': months,
     }
     return render(request, 'budget/view_budget.html', context)
 
@@ -112,9 +117,14 @@ def delete_category(request, id):
 def view_category(request, id):
     category = BudgetCategory.objects.get(id=id)
     labels = BudgetLabel.objects.all()
+    total_planned = BudgetLabel.objects.filter(category=category).aggregate(Sum('planned'))['planned__sum']
+    total_received = BudgetLabel.objects.filter(category=category).aggregate(Sum('received'))['received__sum']
     context = {
         'category': category,
-        'labels': labels
+        'labels': labels,
+        'total_planned': total_planned,
+        'total_received': total_received
+
     }
     return render(request, 'budget/view_category.html', context)
 
@@ -200,4 +210,17 @@ def delete_transaction(request, id):
         return redirect('budget:transactions')
 
     return render(request, 'budget/delete.html', {'transaction': transaction})
+
+@login_required(login_url='login')
+def make_month(request):
+    if request.method == "POST":
+        form = MonthForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.user = request.user
+            f.save()
+            return redirect('budget:budget')
+    else:
+        form = MonthForm()
+    return render(request, 'budget/form.html', {"form": form})
 

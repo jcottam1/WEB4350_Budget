@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.contrib.auth import logout
 
 # Create your views here.
 def register(request):
+    if request.user.is_authenticated:
+        return redirect(reverse("admin"))
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():

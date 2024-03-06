@@ -8,12 +8,22 @@ class DateInput(forms.DateInput):
 class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
-        fields = ['total_budget', 'month']
+        fields = ['budget_name','total_budget', 'month']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        print("User:", user)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['month'].queryset = Month.objects.filter(user=user)
 
 class MonthForm(forms.ModelForm):
     class Meta:
         model = Month
-        fields = ['month']
+        fields = ['month', 'name']
+        widgets = {
+            'month': DateInput()
+        }
 
 class BudgetCategoryForm(forms.ModelForm):
     class Meta:
@@ -32,3 +42,4 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['transaction_name', 'label','amount', 'incoming', 'outgoing']
+
