@@ -10,10 +10,23 @@ from django.db.models import Sum
 # Create your views here.
 def index(request):
     transactions = Transaction.objects.all()
+    months = Month.objects.all()
     context = {
-        'transactions': transactions
+        'transactions': transactions,
+        'months': months
     }
     return render(request, 'budget/index.html', context)
+
+def dashboard(request, id):
+    transactions = Transaction.objects.all()
+    budget = Budget.objects.get(id=id)
+    months = Month.objects.all()
+    context = {
+        'transactions': transactions,
+        'budget': budget,
+        'months': months
+    }
+    return render(request, 'budget/dashboard.html', context)
 
 @login_required(login_url='login')
 def budget(request):

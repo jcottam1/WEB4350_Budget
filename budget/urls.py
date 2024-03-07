@@ -4,6 +4,7 @@ from django.urls import path
 app_name = "budget"
 urlpatterns = [
     path('', views.index, name='index'),
+    path('<int:id>', views.dashboard, name='dashboard'),
     path('budget/', views.budget, name='budget'),
     path('report/', views.reports, name='reports'),
     path('transactions/', views.transactions, name='transactions'),
