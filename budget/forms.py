@@ -28,7 +28,7 @@ class MonthForm(forms.ModelForm):
 class BudgetCategoryForm(forms.ModelForm):
     class Meta:
         model = BudgetCategory
-        fields = ['category_name', 'planned', 'received']
+        fields = ['category_name']
 
 class BudgetLabelForm(forms.ModelForm):
     class Meta:

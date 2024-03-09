@@ -5,15 +5,16 @@ from django.dispatch import receiver
 
 @receiver(pre_save, sender=Transaction)
 def change_transaction(sender, instance, **kwargs):
-    budget = instance.label.category.budget
-    if instance.incoming == True:
-        old_planned = Transaction.objects.get(pk=instance.id)
-        budget.total_budget = budget.total_budget - old_planned.amount
-        budget.save()
-    else:
-        old_planned = Transaction.objects.get(pk=instance.id)
-        budget.total_budget = budget.total_budget + old_planned.amount
-        budget.save()
+    if Transaction.objects.filter(id=instance.id).exists():
+        budget = instance.label.category.budget
+        if instance.incoming == True:
+            old_transaction = Transaction.objects.get(pk=instance.id)
+            budget.total_budget = budget.total_budget - old_transaction.amount
+            budget.save()
+        else:
+            old_transaction = Transaction.objects.get(pk=instance.id)
+            budget.total_budget = budget.total_budget + old_transaction.amount
+            budget.save()
 
 
 @receiver(post_save, sender=Transaction)
@@ -32,3 +33,11 @@ def add_label(sender, instance, **kwargs):
     category = instance.category
     category.planned = category.planned + instance.planned
     category.save()
+
+@receiver(pre_save, sender=BudgetLabel)
+def change_label(sender, instance, **kwargs):
+    if BudgetLabel.objects.filter(id=instance.id).exists():
+        old_planned = BudgetLabel.objects.get(pk=instance.id)
+        category = instance.category
+        category.planned = category.planned - old_planned.planned
+        category.save()
