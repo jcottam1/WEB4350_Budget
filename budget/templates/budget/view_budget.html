@@ -89,7 +89,8 @@
 
                             <tbody>
                             {% for category in categories %}
-                                <tr>
+                                {% if category.budget.id == budget.id %}
+                                    <tr>
                                     <td>Category: {{ category.category_name }}
                                         <button><a href="{% url 'budget:view_category' category.id %}">View
                                             Category</a></button>
@@ -113,6 +114,7 @@
                                         </button>
                                     </a></td>
                                 </tr>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>

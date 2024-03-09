@@ -184,8 +184,10 @@ def reports(request):
 @login_required(login_url='login')
 def transactions(request):
     transactions = Transaction.objects.all()
+    months = Month.objects.all()
     context = {
-        'transactions': transactions
+        'transactions': transactions,
+        'months': months
     }
     return render(request, 'budget/transactions.html', context)
 
@@ -196,7 +198,7 @@ def make_transaction(request):
         if form.is_valid():
             f = form.save(commit=False)
             f.save()
-            return redirect('budget:transactions')
+            return redirect('budget:view_transactions', f.label.category.budget.id)
     else:
         form = TransactionForm()
     return render(request, 'budget/form.html', {"form": form})
@@ -208,7 +210,7 @@ def edit_transaction(request, id):
     if form.is_valid():
         f = form.save(commit=False)
         f.save()
-        return redirect('budget:transactions')
+        return redirect('budget:view_transactions', transaction.label.category.budget.id)
     else:
         form = form
 
@@ -236,4 +238,15 @@ def make_month(request):
     else:
         form = MonthForm()
     return render(request, 'budget/form.html', {"form": form})
+
+def view_transactions(request, id):
+    transactions = Transaction.objects.all()
+    budget = Budget.objects.get(id=id)
+    months = Month.objects.all()
+    context = {
+        'transactions': transactions,
+        'budget': budget,
+        'months': months
+    }
+    return render(request, 'budget/view_transactions.html', context)
 

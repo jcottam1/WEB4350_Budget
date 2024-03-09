@@ -13,6 +13,7 @@ urlpatterns = [
     path('make_label/<int:id>', views.make_label, name="make-label"),
     path('make-month', views.make_month, name='make-month'),
     path('make_transaction/', views.make_transaction, name="make_transaction"),
+    path('view_transactions/<int:id>', views.view_transactions, name="view_transactions"),
     path('view_category/<int:id>', views.view_category, name='view_category'),
     path('view_budget/<int:id>', views.view_budget, name='view_budget'),
     path('edit_category/<int:id>', views.edit_category, name='edit_category'),

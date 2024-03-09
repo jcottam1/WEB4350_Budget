@@ -1,0 +1,34 @@
+from django.db.models.signals import post_save, pre_save
+from .models import Budget, Transaction, BudgetLabel, BudgetCategory
+from django.dispatch import receiver
+
+
+@receiver(pre_save, sender=Transaction)
+def change_transaction(sender, instance, **kwargs):
+    budget = instance.label.category.budget
+    if instance.incoming == True:
+        old_planned = Transaction.objects.get(pk=instance.id)
+        budget.total_budget = budget.total_budget - old_planned.amount
+        budget.save()
+    else:
+        old_planned = Transaction.objects.get(pk=instance.id)
+        budget.total_budget = budget.total_budget + old_planned.amount
+        budget.save()
+
+
+@receiver(post_save, sender=Transaction)
+def change_budget(sender, instance, **kwargs):
+    budget = instance.label.category.budget
+    if instance.incoming == True:
+        budget.total_budget = instance.amount + budget.total_budget
+        budget.save()
+    else:
+        budget.total_budget = budget.total_budget - instance.amount
+        budget.save()
+
+
+@receiver(post_save, sender=BudgetLabel)
+def add_label(sender, instance, **kwargs):
+    category = instance.category
+    category.planned = category.planned + instance.planned
+    category.save()

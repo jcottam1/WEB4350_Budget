@@ -46,6 +46,7 @@ class Transaction(models.Model):
     incoming = models.BooleanField(default=False)
     outgoing = models.BooleanField(default=False)
     transaction_name = models.CharField(max_length=100)
+    date = models.DateField()
 
     def __str__(self):
         return self.transaction_name

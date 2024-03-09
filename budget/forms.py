@@ -41,5 +41,9 @@ class BudgetLabelForm(forms.ModelForm):
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ['transaction_name', 'label','amount', 'incoming', 'outgoing']
+        fields = ['transaction_name', 'label','amount', 'incoming', 'outgoing', 'date']
+
+        widgets = {
+            'date': DateInput()
+        }
 
