@@ -24,7 +24,7 @@
                     <a href="{%  url 'budget:budget' %}"  class="nav-item nav-link links {% if nbar == 'budget' %}nav-active{% else %}nav-inactive{% endif %}">Budget</a>
                     <a href="{%  url 'budget:transactions' %}"  class="nav-item nav-link links {% if nbar == 'transactions' %}nav-active{% else %}nav-inactive{% endif %}">Transactions</a>
                     <a href="{%  url 'budget:reports' %}"  class="nav-item nav-link links {% if nbar == 'reports' %}nav-active{% else %}nav-inactive{% endif %}">Reports</a>
-                    <a href="{%  url 'logout' %}"  class="nav-item nav-link links {% if nbar == 'reports' %}nav-active{% else %}nav-inactive{% endif %}">Logout</a>
+                    <a href="{%  url 'logout' %}"  class="nav-item nav-link links {% if nbar == 'logout' %}nav-active{% else %}nav-inactive{% endif %}">Logout</a>
                 </div>
                 {% else %}
                     <a href="{%  url 'login' %}"  class="nav-item nav-link links {% if nbar == 'login' %}nav-active{% else %}nav-inactive{% endif %}">Login</a>

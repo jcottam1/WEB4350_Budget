@@ -2,7 +2,10 @@
 {% block body %}
 <form method="POST">
     {% csrf_token %}
-    {{ form }}
+    <label for="">Username</label>
+    <input type="text" name="username" id="">
+    <label for="">Password</label>
+    <input type="password" name="password" id="">
     <button type="submit">Login</button>
 </form>
 {% endblock %}

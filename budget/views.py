@@ -12,6 +12,7 @@ def index(request):
     transactions = Transaction.objects.all()
     months = Month.objects.all()
     context = {
+        'nbar': 'dashboard',
         'transactions': transactions,
         'months': months
     }
@@ -22,6 +23,7 @@ def dashboard(request, id):
     budget = Budget.objects.get(id=id)
     months = Month.objects.all()
     context = {
+        'nbar': 'dashboard',
         'transactions': transactions,
         'budget': budget,
         'months': months
@@ -34,6 +36,7 @@ def budget(request):
     categories = BudgetCategory.objects.all()
     months = Month.objects.all()
     context = {
+        'nbar': 'budget',
         'budgets': budgets,
         'categories': categories,
         'months': months
@@ -80,12 +83,14 @@ def delete_budget(request, id):
 @login_required(login_url='login')
 def view_budget(request, id):
     budget = Budget.objects.get(id=id)
-    categories = BudgetCategory.objects.all()
+    categories = BudgetCategory.objects.filter(budget_id=id)
     months = Month.objects.all()
+    income_transactions = Transaction.objects.filter(incoming=True)
     context = {
         'budget': budget,
         'categories': categories,
         'months': months,
+        'income_transactions':income_transactions,
     }
     return render(request, 'budget/view_budget.html', context)
 
@@ -179,13 +184,17 @@ def delete_label(request, id):
 
 @login_required(login_url='login')
 def reports(request):
-    return render(request, 'budget/reports.html')
+    context = {
+        'nbar': 'reports',
+    }
+    return render(request, 'budget/reports.html', context)
 
 @login_required(login_url='login')
 def transactions(request):
     transactions = Transaction.objects.all()
     months = Month.objects.all()
     context = {
+        'nbar': 'transactions',
         'transactions': transactions,
         'months': months
     }
