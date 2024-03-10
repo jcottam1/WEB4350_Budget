@@ -12,6 +12,10 @@
     text-decoration: underline;
 }
 
+.body-content {
+    padding-bottom:350px;
+}
+
 .background {
     background-color: #D7E4E8;
 }
