@@ -4,7 +4,7 @@
 }
 
 .links:hover {
-    color: pink;
+    color: #C3BEE8;
 }
 
 .nav-active {
@@ -23,6 +23,11 @@
 .button-color {
     background-color: #635D8C;
     color: white;
+}
+
+.main-button:hover {
+    background-color: #C3BEE8;
+
 }
 
 .button-delete {
