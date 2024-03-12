@@ -46,6 +46,10 @@
     width: 450px;
 }
 
+.width {
+    width: 25rem;
+}
+
  .dash-balance-rows {
      display: flex;
      flex-direction: row;
