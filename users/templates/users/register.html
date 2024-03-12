@@ -2,7 +2,30 @@
 {% block body %}
 <form method="POST">
     {% csrf_token %}
+    <div class="mt-5">
+        <h1 class="d-flex justify-content-center">Welcome to</h1>
+        <h1 class="d-flex justify-content-center"><strong>EVERY PENNY</strong></h1>
+        <h5 class="d-flex justify-content-center">We help you save, down to EVERY PENNY.</h5>
+    </div>
+
+    <div class="container mt-5 d-flex justify-content-center">
+      <div class="card shadow border-0 w-75 loginCard-background">
+          <div class="card-body">
+              <h4 class="d-flex justify-content-center mb-5">Create New Account</h4>
+
+              <div class="container">
+                  <div class="row">
+
+
+
+                      <div class="col-lg-12 mt-4 d-flex justify-content-center"><button class="btn shadow button-color border-0 py-3 px-5 bg-dark login"  type="submit">Signup</button></div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+    </div>
     {{ form }}
-    <button type="submit">Signup</button>
+
 </form>
 {% endblock %}
