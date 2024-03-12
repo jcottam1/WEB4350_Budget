@@ -7,14 +7,16 @@ from django.dispatch import receiver
 def change_transaction(sender, instance, **kwargs):
     if Transaction.objects.filter(id=instance.id).exists():
         budget = instance.label.category.budget
+        old_transaction = Transaction.objects.get(pk=instance.id)
         if instance.incoming == True:
-            old_transaction = Transaction.objects.get(pk=instance.id)
             budget.total_budget = budget.total_budget - old_transaction.amount
             budget.save()
         else:
-            old_transaction = Transaction.objects.get(pk=instance.id)
             budget.total_budget = budget.total_budget + old_transaction.amount
             budget.save()
+        instance.label.received = instance.label.received - old_transaction.amount
+        instance.label.category.received = instance.label.category.received - old_transaction.amount
+        instance.label.save()
 
 
 @receiver(post_save, sender=Transaction)
@@ -26,6 +28,10 @@ def change_budget(sender, instance, **kwargs):
     else:
         budget.total_budget = budget.total_budget - instance.amount
         budget.save()
+
+    instance.label.received = instance.label.received + instance.amount
+    instance.label.category.received = instance.label.category.received + instance.amount
+    instance.label.save()
 
 
 @receiver(post_save, sender=BudgetLabel)

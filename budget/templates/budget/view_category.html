@@ -2,6 +2,7 @@
 <body>
 {% block body %}
     <h1>Category: {{ category.category_name }}</h1>
+    <p><a href="{% url 'budget:view_budget' category.budget.id%}">View Budget</a></p>
     <button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button>
     <button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button>
 

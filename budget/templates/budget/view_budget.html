@@ -61,7 +61,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-6 ">
-                                            <a href="{% url 'budget:view_transactions' transaction.id %}" class="text-dark h4">{{ transaction.transaction_name }}</a>
+                                            <a href="{% url 'budget:view_transactions' transaction.label.category.budget.id%}" class="text-dark h4">{{ transaction.transaction_name }}</a>
                                         </div>
                                         <div class="col-lg-3 d-flex justify-content-start">
                                             <span class="text-dark h4">{{ transaction.amount }}</span>

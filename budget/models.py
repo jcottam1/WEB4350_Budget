@@ -23,8 +23,8 @@ class Budget(models.Model):
 class BudgetCategory(models.Model):
     category_name = models.CharField(max_length=100)
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
-    planned = models.DecimalField(max_digits=10, decimal_places=2)
-    received = models.DecimalField(max_digits=10, decimal_places=2)
+    planned = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    received = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.category_name
