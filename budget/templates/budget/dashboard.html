@@ -22,102 +22,103 @@
         <div class="dash-small-cards">
             <div class="card shadow border-0">
                 <div class="card-body index-card">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Current Balances</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <h5>Current Balances</h5>
                     <hr>
-                    <table>
-                        <tbody>
-                            <tr class="dash-balance-rows">
-                                <td>Current Balances</td>
-                                <td></td>
-                            </tr>
-                            <tr class="dash-balance-rows">
-                                <td>Savings</td>
-                                <td class="dash-balance-number">Data needs added</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <p>Current Balances</p>
+                                <p>Savings</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <p><strong>?$0.00</strong></p>
+                                <p><strong>?$0.00</strong></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card shadow border-0">
                 <div class="card-body index-card">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Remaining Spending Balances</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <h5>Remaining Spending Balances</h5>
                     <hr>
-                    <table>
-                        <tbody>
-                            <tr class="dash-balance-rows">
-                                <td>Total amount remaining</td>
-                                <td>{{ budget.total_budget }}</td>
-                            </tr>
-                            <tr class="dash-balance-rows">
-                                <td>Daily spending limit</td>
-                                <td>$30.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <p>Total amount remaining</p>
+                                <p>Daily spending limit</p>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <p class="d-flex justify-content-end"><strong>{{ budget.total_budget }}</strong></p>
+                                <p class="d-flex justify-content-end"><strong>$30.00</strong></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
 
         <div class="card shadow border-0">
             <div class="card-body">
                 <table>
                     <thead>
-                    <tr>
-                        <th>Transactions</th>
-                        <th>Date</th>
-                        <th>Label</th>
-                        <th>Amount</th>
-                        <th>In or Out?</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                </table>
-                    <hr>
-                    <table>
-                    <tbody>
-                        {% for transaction in transactions %}
-                           {% if transaction.label.category.budget.id == budget.id %}
+                        <div class="container">
+                            <div class="row">
                                 <tr>
-                            <td>{{ transaction.transaction_name }}</td>
-                            <td>Date</td>
-                            <td>{{ transaction.label }}</td>
-                            <td>{{ transaction.amount }}</td>
-                            {% if transaction.incoming == True %}
-                                <td>Incoming</td>
-                            {% elif transaction.outgoing == True %}
-                                <td>Outgoing</td>
-                            {% endif %}
-                            <td><a href="{% url 'budget:edit_transaction' transaction.id %}"><button class="btn shadow button-color border-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                </svg>&nbsp;&nbsp;Edit</button></a></td>
-                            <td><a href="{% url 'budget:delete_transaction' transaction.id %}"><button class="btn shadow button-delete border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                </svg>&nbsp;&nbsp;Delete</button></a></td>
-                            </tr>
-                            {% endif %}
-                        {% endfor %}
+                                    <th class="col-lg-3">Transactions</th>
+                                    <th class="col-lg-2">Date</th>
+                                    <th class="col-lg-3">Label</th>
+                                    <th class="col-lg-2">Amount</th>
+                                    <th class="col-lg-2">In or Out?</th>
+
+                                </tr>
+                            </div>
+                        </div>
+                    </thead>
+
+
+                    <hr class="hr pt-1 pb-1" />
+
+
+                    <tbody>
+                        <div class="container">
+                            <div class="row">
+                                {% for transaction in transactions %}
+                                {% if transaction.label.category.budget.id == budget.id %}
+                                <tr>
+                                    <td class="col-lg-3">{{ transaction.transaction_name }}</td>
+                                    <td class="col-lg-2">Date</td>
+                                    <td class="col-lg-3">{{ transaction.label }}</td>
+                                    <td class="col-lg-2">{{ transaction.amount }}</td>
+
+                                    {% if transaction.incoming == True %}
+                                        <td class="col-lg-2">Incoming</td>
+                                    {% elif transaction.outgoing == True %}
+                                        <td class="col-lg-2">Outgoing</td>
+                                    {% endif %}
+
+                                    <td><a href="{% url 'budget:edit_transaction' transaction.id %}"><button class="btn shadow button-color border-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                        </svg></button></a></td>
+                                    <td><a href="{% url 'budget:delete_transaction' transaction.id %}"><button class="btn shadow button-delete border-0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                        </svg></button></a></td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
                     </tbody>
                 </table>
                 <hr>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'budget:make_transaction' %}"><button class="btn shadow button-color border-0 py-3 px-5 main-button">Create Transaction</button></a>
+                </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <a href="{% url 'budget:make_transaction' %}"><button class="btn shadow button-color border-0">Create Transaction</button></a>
-            </div>
-            </div>
-    </div>
+        </div>
 {% endblock %}
 </body>
