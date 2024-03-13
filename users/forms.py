@@ -15,7 +15,7 @@ class RegistrationForm(UserCreationForm):
         ),
     )
     password2 = forms.CharField(
-        label="Confirm password",
+        label="Confirm Password",
         widget=forms.PasswordInput(
             attrs={'class': 'pass form-control w-100 shadow border-0', 'type': 'password', 'placeholder': ''}
         ),
@@ -24,6 +24,12 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+        labels = {
+            'username': 'Username',
+            'email': 'Email Address'
+        }
+
         widgets = {
             'username': TextInput(attrs={
                 'class': "form-control w-100 shadow border-0",

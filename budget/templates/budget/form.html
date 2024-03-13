@@ -1,9 +1,55 @@
 {% extends 'budget/base.html' %}
 
 {% block body %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Save</button>
-</form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="container mt-5 d-flex justify-content-left">
+            <div class="card shadow border-0 w-75 loginCard-background">
+                <div class="card-body">
+                    <h4 class="d-flex justify-content-center mb-5">Register</h4>
+
+                    <div class="container">
+
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+
+
+
+                        {% for field in form %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="h5" for="">{{ field.label }}</label>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-12">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+                    <div class="row">
+                        <div class="col-lg-12 mt-4 d-flex justify-content-center">
+                            <button class="btn shadow button-color border-0 py-3 px-5 bg-dark login" type="submit">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </form>
 {% endblock %}

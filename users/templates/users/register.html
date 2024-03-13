@@ -16,38 +16,28 @@
                     <h4 class="d-flex justify-content-center mb-5">Register</h4>
 
                     <div class="container">
+
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
+
                         <div class="row">
-                            <div class="col-lg-12">
-                                <label class="h5" for="">Username</label>
-                            </div>
+                            {% for field in form %}
+                                <div class="col-lg-12">
+                                    <label class="h5" for="">{{ field.label }}</label>
+                                </div>
 
-                            <div class="form-group col-lg-12">
-                                {{ form.username }}
-                            </div>
-
-                            <div class="col-lg-12">
-                                <label class="h5" for="">Email</label>
-                            </div>
-
-                            <div class="form-group col-lg-12">
-                                {{ form.email }}
-                            </div>
-
-                            <div class="col-lg-12">
-                                <label class="h5" for="">Password</label>
-                            </div>
-
-                            <div class="form-group col-lg-12">
-                                {{ form.password1 }}
-                            </div>
-
-                            <div class="col-lg-12">
-                                <label class="h5" for="">Confirm Password</label>
-                            </div>
-
-                            <div class="form-group col-lg-12">
-                                {{ form.password2 }}
-                            </div>
+                                <div class="form-group col-lg-12">
+                                    {{ field }}
+                                </div>
+                            {% endfor %}
 
                             <div class="col-lg-12 mt-4 d-flex justify-content-center">
                                 <button class="btn shadow button-color border-0 py-3 px-5 bg-dark login" type="submit">

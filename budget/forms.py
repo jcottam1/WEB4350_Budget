@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm, TextInput, NumberInput, Select, CheckboxInput
 from budget.models import Budget, Month, BudgetCategory, BudgetLabel, Transaction
 
 
@@ -9,6 +10,27 @@ class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
         fields = ['budget_name','total_budget', 'month']
+
+        labels = {
+            'budget_name': 'Budget Name',
+            'total_budget': 'Total Budget',
+            'month': 'Month',
+        }
+
+        widgets = {
+            'budget_name': TextInput(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            }),
+            'total_budget': NumberInput(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            }),
+            'month': Select(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            })
+        }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -21,8 +43,20 @@ class MonthForm(forms.ModelForm):
     class Meta:
         model = Month
         fields = ['month', 'name']
+
+        labels = {
+            'month': 'Month',
+            'name': 'Name',
+        }
+
         widgets = {
-            'month': DateInput()
+            'month': DateInput(attrs={
+                'class': "form-control w-100 shadow border-0"
+            }),
+            'name': TextInput(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            })
         }
 
 class BudgetCategoryForm(forms.ModelForm):
@@ -43,7 +77,37 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = ['transaction_name', 'label','amount', 'incoming', 'outgoing', 'date']
 
+        labels = {
+            'transaction_name': 'Transaction Name',
+            'label': 'Label',
+            'amount': 'Amount',
+            'incoming': 'Incoming',
+            'outgoing': 'Outgoing',
+            'date': 'Date ',
+        }
+
         widgets = {
-            'date': DateInput()
+            'transaction_name': TextInput(attrs={
+                'class': "form-control w-100 form-group shadow border-0",
+                'placeholder': ''
+            }),
+            'label': TextInput(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            }),
+            'amount': NumberInput(attrs={
+                'class': "form-control w-100 shadow border-0",
+                'placeholder': ''
+            }),
+            'incoming': CheckboxInput(attrs={
+                'class': "h-100"
+            }),
+            'outgoing': CheckboxInput(attrs={
+                'class': "form-control bg-warning shadow border-0",
+                'placeholder': ''
+            }),
+            'date': DateInput(attrs={
+                'class': "form-control w-100 shadow border-0"
+            })
         }
 
