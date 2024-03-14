@@ -54,7 +54,14 @@ def make_budget(request):
             return redirect('budget:budget')
     else:
         form = BudgetForm(user=request.user)
-    return render(request, 'budget/form.html', {"form": form})
+
+    context = {
+        'nbar': 'budget',
+        'form_name': 'Create Budget',
+        'form': form
+    }
+
+    return render(request, 'budget/form.html', context)
 
 @login_required(login_url='login')
 def edit_budget(request, id):
@@ -68,7 +75,14 @@ def edit_budget(request, id):
     else:
         form = form
 
-    return render(request, 'budget/form.html', {"form": form, 'budget': budget})
+    context = {
+        'nbar': 'budget',
+        'form_name': 'View Budget',
+        'form': form,
+        'budget': budget
+    }
+
+    return render(request, 'budget/form.html', context)
 
 @login_required(login_url='login')
 def delete_budget(request, id):
@@ -87,6 +101,7 @@ def view_budget(request, id):
     months = Month.objects.all()
     income_transactions = Transaction.objects.filter(incoming=True)
     context = {
+        'nbar': 'budget',
         'budget': budget,
         'categories': categories,
         'months': months,
@@ -246,7 +261,13 @@ def make_month(request):
             return redirect('budget:budget')
     else:
         form = MonthForm()
-    return render(request, 'budget/form.html', {"form": form})
+
+    context = {
+        'nbar': 'budget',
+        'form_name': 'Create Month',
+        'form': form
+    }
+    return render(request, 'budget/form.html', context)
 
 def view_transactions(request, id):
     transactions = Transaction.objects.all()

@@ -9,6 +9,7 @@ class DateInput(forms.DateInput):
 class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
+
         fields = ['budget_name','total_budget', 'month']
 
         labels = {
