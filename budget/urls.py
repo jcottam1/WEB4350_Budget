@@ -11,7 +11,6 @@ urlpatterns = [
     path('make_budget/', views.make_budget, name="make-budget"),
     path('make_category/<int:id>', views.make_category, name="make-category"),
     path('make_label/<int:id>', views.make_label, name="make-label"),
-    path('make-month', views.make_month, name='make-month'),
     path('make_transaction/', views.make_transaction, name="make_transaction"),
     path('view_transactions/<int:id>', views.view_transactions, name="view_transactions"),
     path('view_category/<int:id>', views.view_category, name='view_category'),

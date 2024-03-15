@@ -18,16 +18,16 @@
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Select Month
+                            Select Budget
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        {% for month in months %}
-                                {% if month.user == user and month.budget.id %}
-                                    <a class="dropdown-item"
-                                       href="{% url 'budget:view_budget' month.budget.id %}">{{ month.name }}</a>
-                                {% endif %}
-                            {% endfor %}
-                    </div>
+                {% for budget in budgets %}
+                    {% if budget.user == user %}
+                        <a class="dropdown-item"
+                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
                 </div>
             </div>
         </div>
@@ -37,8 +37,8 @@
 
             <br>
             {% if budget.user == user %}
-                <p>Budget: {{ budget.budget_name }} <a href="{% url 'budget:view_budget' budget.id %}">
-                    <button class="btn shadow button-color border-0 py-3 px-5 main-button">View Budget</button>
+                <p>Budget: {{ budget.budget_name }} <a href="{% url 'budget:dashboard' budget.id %}">
+                    <button class="btn shadow button-color border-0 py-3 px-5 main-button">View Dashboard</button>
                 </a></p>
                 <h2 class="pb-3">Planned Income</h2>
                 <div class="card shadow border-0">
@@ -105,7 +105,7 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-6 mb-3">
-                                            <a href="" class="text-dark h4">{{ category.category_name }}</a>
+                                            <a href="{% url 'budget:view_category' category.id%}" class="text-dark h4">{{ category.category_name }}</a>
                                         </div>
                                         <div class="col-lg-2  mb-3">
                                             <span class="text-dark h4">{{ category.planned }}</span>

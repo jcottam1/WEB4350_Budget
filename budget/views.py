@@ -1,32 +1,57 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.template import loader
-from .forms import BudgetForm, MonthForm, BudgetCategoryForm, BudgetLabelForm, TransactionForm
-from .models import Budget, BudgetCategory, BudgetLabel, Transaction, Month
+from .forms import BudgetForm, BudgetCategoryForm, BudgetLabelForm, TransactionForm
+from .models import Budget, BudgetCategory, BudgetLabel, Transaction
 from django.db.models import Sum
+from time import strftime
+from django.utils import timezone
 
 
 # Create your views here.
+@login_required(login_url='login')
 def index(request):
     transactions = Transaction.objects.all()
-    months = Month.objects.all()
+    budgets = Budget.objects.all()
     context = {
         'nbar': 'dashboard',
         'transactions': transactions,
-        'months': months
+        'budgets': budgets
     }
     return render(request, 'budget/index.html', context)
 
+@login_required(login_url='login')
 def dashboard(request, id):
     transactions = Transaction.objects.all()
     budget = Budget.objects.get(id=id)
-    months = Month.objects.all()
+    budgets = Budget.objects.all()
+    current_year = strftime("%Y")
+    current_month = strftime('%m')
+    current_day = strftime('%d')
+    if current_month == "01" or current_month == "03" or current_month == "05" or current_month == "07" or current_month == "08" or current_month == "10" or current_month == "12":
+        days_left = 31 - int(current_day)
+    elif current_month == "04" or current_month == "06" or current_month == "09" or current_month == "11":
+        days_left = 30 - int(current_day)
+    elif current_month == "02" and current_year % 4 == 0:
+        if current_year % 100 == 0:
+            if current_year % 400 == 0:
+                days_left = 29 - int(current_day)
+            else:
+                days_left = 28 - int(current_day)
+        else:
+            days_left = 29 - int(current_day)
+    else:
+        days_left = 28 - int(current_day)
+
+    spending_limit = budget.total_budget/days_left
     context = {
         'nbar': 'dashboard',
         'transactions': transactions,
         'budget': budget,
-        'months': months
+        'budgets': budgets,
+        'current_month': current_month,
+        'spending_limit': spending_limit,
+        'current_day': current_day,
+        'days_left': days_left
     }
     return render(request, 'budget/dashboard.html', context)
 
@@ -34,12 +59,10 @@ def dashboard(request, id):
 def budget(request):
     budgets = Budget.objects.all()
     categories = BudgetCategory.objects.all()
-    months = Month.objects.all()
     context = {
         'nbar': 'budget',
         'budgets': budgets,
         'categories': categories,
-        'months': months
     }
     return render(request, 'budget/budget.html', context)
 
@@ -97,15 +120,14 @@ def delete_budget(request, id):
 @login_required(login_url='login')
 def view_budget(request, id):
     budget = Budget.objects.get(id=id)
-    categories = BudgetCategory.objects.filter(budget_id=id)
-    months = Month.objects.all()
     income_transactions = Transaction.objects.filter(incoming=True)
+    budgets = Budget.objects.all()
+    cateogries = BudgetCategory.objects.all()
     context = {
-        'nbar': 'budget',
         'budget': budget,
-        'categories': categories,
-        'months': months,
         'income_transactions':income_transactions,
+        'budgets': budgets,
+        'categories': cateogries
     }
     return render(request, 'budget/view_budget.html', context)
 
@@ -207,11 +229,11 @@ def reports(request):
 @login_required(login_url='login')
 def transactions(request):
     transactions = Transaction.objects.all()
-    months = Month.objects.all()
+    budgets = Budget.objects.all()
     context = {
         'nbar': 'transactions',
         'transactions': transactions,
-        'months': months
+        'budgets': budgets
     }
     return render(request, 'budget/transactions.html', context)
 
@@ -250,33 +272,12 @@ def delete_transaction(request, id):
 
     return render(request, 'budget/delete.html', {'transaction': transaction})
 
-@login_required(login_url='login')
-def make_month(request):
-    if request.method == "POST":
-        form = MonthForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = form.save(commit=False)
-            f.user = request.user
-            f.save()
-            return redirect('budget:budget')
-    else:
-        form = MonthForm()
-
-    context = {
-        'nbar': 'budget',
-        'form_name': 'Create Month',
-        'form': form
-    }
-    return render(request, 'budget/form.html', context)
-
 def view_transactions(request, id):
     transactions = Transaction.objects.all()
     budget = Budget.objects.get(id=id)
-    months = Month.objects.all()
     context = {
         'transactions': transactions,
         'budget': budget,
-        'months': months
     }
     return render(request, 'budget/view_transactions.html', context)
 

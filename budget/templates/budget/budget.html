@@ -8,21 +8,18 @@
             <a href="{% url 'budget:make-budget' %}">
                 <button class="btn shadow button-color border-0">Create Budget</button>
             </a>
-        <a href="{% url 'budget:make-month' %}">
-                <button class="btn shadow button-color border-0">Create Month</button>
-            </a>
         </div>
         <br>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select Month
+                Select Budget
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {% for month in months %}
-                    {% if month.user == user and month.budget.id %}
+                {% for budget in budgets %}
+                    {% if budget.user == user %}
                         <a class="dropdown-item"
-                           href="{% url 'budget:view_budget' month.budget.id %}">{{ month.name }}</a>
+                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }}</a>
                     {% endif %}
                 {% endfor %}
             </div>

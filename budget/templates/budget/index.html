@@ -7,13 +7,13 @@
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Select Month
+                Select Budget
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {% for month in months %}
-                    {% if month.user == user and month.budget.id %}
+                {% for budget in budgets %}
+                    {% if budget.user == user %}
                         <a class="dropdown-item"
-                           href="{% url 'budget:dashboard' month.budget.id %}">{{ month.name }}</a>
+                           href="{% url 'budget:dashboard' budget.id %}">{{ budget.budget_name }}</a>
                     {% endif %}
                 {% endfor %}
             </div>

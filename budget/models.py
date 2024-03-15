@@ -2,18 +2,28 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Month(models.Model):
-    month = models.DateField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
+MONTH_CHOICES = (
+    ('January', 'January'),
+    ('February', 'February'),
+    ('March', 'March'),
+    ('April', 'April'),
+    ('May', 'May'),
+    ('June', 'June'),
+    ('July', 'July'),
+    ('August', 'August'),
+    ('September', 'September'),
+    ('October', 'October'),
+    ('November', 'November'),
+    ('December', 'December')
+)
+
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     budget_name = models.CharField(max_length=100)
     total_budget = models.DecimalField(max_digits=10, decimal_places=2)
-    month = models.OneToOneField(Month, on_delete=models.PROTECT)
+    new_month = models.CharField(choices=MONTH_CHOICES,blank=True, null=True, max_length=100)
+    year = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.budget_name
