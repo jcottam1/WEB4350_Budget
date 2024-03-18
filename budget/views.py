@@ -42,7 +42,7 @@ def dashboard(request, id):
     else:
         days_left = 28 - int(current_day)
 
-    spending_limit = budget.total_budget/days_left
+    spending_limit = budget.total_budget/(days_left + 1)
     context = {
         'nbar': 'dashboard',
         'transactions': transactions,

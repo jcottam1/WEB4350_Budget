@@ -15,7 +15,7 @@ class BudgetForm(forms.ModelForm):
         labels = {
             'budget_name': 'Budget Name',
             'total_budget': 'Total Budget',
-            'new_month': 'new_month',
+            'new_month': 'Month',
             'year': 'Year'
         }
 
