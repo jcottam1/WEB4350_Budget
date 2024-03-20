@@ -131,20 +131,20 @@ def view_budget(request, id):
     }
     return render(request, 'budget/view_budget.html', context)
 
-"""
+
 @login_required(login_url='login')
 def view_report(request, id):
     report = Budget.objects.get(id=id)
+    budget = Budget.objects.get(id=id)
     budgets = Budget.objects.all()
-    cateogries = BudgetCategory.objects.all()
+    categories = BudgetCategory.objects.all()
     context = {
         'budget': budget,
-        'income_transactions':income_transactions,
         'budgets': budgets,
-        'categories': cateogries
+        'categories': categories,
     }
-    return render(request, 'budget/view_budget.html', context)
-"""
+    return render(request, 'budget/view_report.html', context)
+
 
 @login_required(login_url='login')
 def make_category(request, id):
@@ -236,8 +236,11 @@ def delete_label(request, id):
 
 @login_required(login_url='login')
 def reports(request):
+    budgets = Budget.objects.all()
     context = {
         'nbar': 'reports',
+        'budgets': budgets
+
     }
     return render(request, 'budget/reports.html', context)
 

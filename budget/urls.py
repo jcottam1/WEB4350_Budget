@@ -22,5 +22,6 @@ urlpatterns = [
     path('edit_label/<int:id>', views.edit_label, name='edit_label'),
     path('delete_label/<int:id>', views.delete_label, name='delete_label'),
     path('edit_transaction/<int:id>', views.edit_transaction, name='edit_transaction'),
-    path('delete_transaction/<int:id>', views.delete_transaction, name='delete_transaction')
+    path('delete_transaction/<int:id>', views.delete_transaction, name='delete_transaction'),
+    path('view_report/<int:id>', views.view_report, name='view_report')
 ]

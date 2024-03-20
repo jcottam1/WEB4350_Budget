@@ -13,7 +13,7 @@
                 {% for budget in budgets %}
                     {% if budget.user == user %}
                         <a class="dropdown-item"
-                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }}</a>
+                           href="{% url 'budget:view_report' budget.id %}">{{ budget.budget_name }}</a>
                     {% endif %}
                 {% endfor %}
             </div>
