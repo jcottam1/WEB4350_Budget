@@ -131,6 +131,21 @@ def view_budget(request, id):
     }
     return render(request, 'budget/view_budget.html', context)
 
+"""
+@login_required(login_url='login')
+def view_report(request, id):
+    report = Budget.objects.get(id=id)
+    budgets = Budget.objects.all()
+    cateogries = BudgetCategory.objects.all()
+    context = {
+        'budget': budget,
+        'income_transactions':income_transactions,
+        'budgets': budgets,
+        'categories': cateogries
+    }
+    return render(request, 'budget/view_budget.html', context)
+"""
+
 @login_required(login_url='login')
 def make_category(request, id):
     if request.method == "POST":
@@ -225,6 +240,8 @@ def reports(request):
         'nbar': 'reports',
     }
     return render(request, 'budget/reports.html', context)
+
+
 
 @login_required(login_url='login')
 def transactions(request):

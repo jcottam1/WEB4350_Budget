@@ -4,6 +4,21 @@
     <div class="container">
         <h1 class="mt-5 display-4">Reports</h1>
         <hr>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Budget
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for budget in budgets %}
+                    {% if budget.user == user %}
+                        <a class="dropdown-item"
+                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <br>
     </div>
 {% endblock %}
 </body>
