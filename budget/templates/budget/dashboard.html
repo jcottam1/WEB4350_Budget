@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
 
-        <h1 class="mt-5 display-4">Dashboard</h1>
+        <h1 class="mt-5 display-4">{{ budget.budget_name }} Dashboard</h1>
         <hr>
 
         {# DROP DOWN BUTTON #}
@@ -23,7 +23,7 @@
         </div>
         <br>
 
-        <p>Budget: {{ budget.budget_name }} <a href="{% url 'budget:view_budget' budget.id %}">
+        <p><a href="{% url 'budget:view_budget' budget.id %}">
             <button class="btn shadow button-color border-0 py-3 px-5 main-button">View Budget</button>
         </a></p>
 
@@ -77,29 +77,29 @@
                                 <td class="border-top-0">Daily Spending Limit</td>
                                 <td class="border-top-0"><strong>
                                     {% if current_month == "01" and budget.new_month == "January" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "02" and budget.new_month == "February" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "03" and budget.new_month == "March" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "04" and budget.new_month == "April" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "05" and budget.new_month == "May" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "06" and budget.new_month == "June" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "07" and budget.new_month == "July" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "08" and budget.new_month == "August" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "09" and budget.new_month == "September" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "10" and budget.new_month == "October" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "11" and budget.new_month == "November" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% elif current_month == "12" and budget.new_month == "December" %}
-                                        {{ spending_limit }}
+                                        {{ spending_limit|floatformat:2}}
                                     {% endif %}
                                 {{ days_left }}
                                 </strong></td>
@@ -112,8 +112,7 @@
             </div>
         </div>
 
-
-        {# LARGE CARD - TRANSACTIONS #}
+    {# LARGE TRANSACTIONS CARD #}
         <div class="card shadow border-0">
             <div class="card-body">
                 <table class="table table-borderless table-sm">
@@ -134,7 +133,7 @@
                             {% if transaction.label.category.budget.id == budget.id %}
                                 <tr>
                                     <td>{{ transaction.transaction_name }}</td>
-                                    <td>Date</td>
+                                    <td>{{ transaction.date }}</td>
                                     <td>{{ transaction.label }}</td>
                                     <td>{{ transaction.amount }}</td>
 

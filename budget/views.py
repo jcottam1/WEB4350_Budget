@@ -50,8 +50,7 @@ def dashboard(request, id):
         'budgets': budgets,
         'current_month': current_month,
         'spending_limit': spending_limit,
-        'current_day': current_day,
-        'days_left': days_left
+        'current_day': current_day
     }
     return render(request, 'budget/dashboard.html', context)
 

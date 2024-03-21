@@ -2,7 +2,7 @@
 <body>
 {% block body %}
     <div class="container">
-        <h1 class="mt-5 display-4">Transactions</h1>
+        <h1 class="mt-5 display-4">{{ budget.budget_name }} Transactions</h1>
         <hr>
         <a href="{% url 'budget:view_budget' budget.id%}">View Budget</a>
         <div class="card shadow border-0">
@@ -56,7 +56,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-center">
-                <a href="{% url 'budget:make_transaction' %}">
+                <a href="{% url 'budget:make_transaction'%}">
                     <button class="btn shadow button-color border-0">Create Transaction</button>
                 </a>
             </div>
