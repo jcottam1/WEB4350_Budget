@@ -1,6 +1,6 @@
-#web: gunicorn mysite.wsgi
+web: gunicorn mysite.wsgi
 #web: python manage.py runserver
-web: python manage.py runserver "0.0.0.0:$PORT" 
+#web: python manage.py runserver "0.0.0.0:$PORT" 
 
 # Uncomment this `release` process if you are using a database, so that Django's model
 # migrations are run as part of app deployment, using Heroku's Release Phase feature:
