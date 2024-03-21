@@ -1,5 +1,6 @@
 asgiref==3.7.2
 distlib==0.3.6
+dj-database-url==2.1.0
 Django==4.2.3
 django-forms-fieldset==1.0.2
 djangorestframework==3.14.0
