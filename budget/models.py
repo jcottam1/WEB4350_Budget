@@ -43,7 +43,7 @@ class BudgetLabel(models.Model):
     category = models.ForeignKey(BudgetCategory, on_delete=models.CASCADE)
     label = models.CharField(max_length=100)
     planned = models.DecimalField(max_digits=10, decimal_places=2)
-    received = models.DecimalField(max_digits=10, decimal_places=2)
+    received = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     due_date = models.DateField()
     notes = models.CharField(max_length=100, null=True, blank=True)
 

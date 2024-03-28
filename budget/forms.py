@@ -54,7 +54,7 @@ class BudgetCategoryForm(forms.ModelForm):
 class BudgetLabelForm(forms.ModelForm):
     class Meta:
         model = BudgetLabel
-        fields = ['label', 'planned', 'received', 'due_date', 'notes']
+        fields = ['label', 'planned', 'due_date', 'notes']
         widgets = {
             'due_date': DateInput()
         }

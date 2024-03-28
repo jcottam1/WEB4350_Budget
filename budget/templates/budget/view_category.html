@@ -2,67 +2,97 @@
 <body>
 {% block body %}
     <h1>Category: {{ category.category_name }}</h1>
-    <p><a href="{% url 'budget:view_budget' category.budget.id%}">View Budget</a></p>
-    <button><a href="{% url 'budget:edit_category' category.id %}">Edit Category</a></button>
-    <button><a href="{% url 'budget:delete_category' category.id %}">Delete Category</a></button>
+    <p><a href="{% url 'budget:view_budget' category.budget.id %}">View Budget</a></p>
 
     <h2 class="mt-5">Sub-Categories</h2>
+
+    <div class="container">
     <div class="card shadow border-0">
         <div class="card-body">
-            <table>
-                <thead>
-                <tr>
-                    <th>Category Breakdown</th>
-                    <th>Planned</th>
-                    <th>Received</th>
-                    <th>Notes</th>
-                    <th>Due Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <h5>{{ category.category_name }} Sub-Categories</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5>Planned</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5>Received</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5>Notes</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5>Due Date</h5>
+                    </div>
+                    <div class="col-lg-1">
+                        <h5>Edit</h5>
+                    </div>
+                    <div class="col-lg-1">
+                        <h5>Delete</h5>
+                    </div>
+                </div>
+                <hr class="hr pt-1 pb-1"/>
+
                 {% for label in labels %}
-                    <tr>
-                        {% if label.category == category %}
-                            <td>{{ label.label }}</td>
-                            <td>{{ label.planned }}</td>
-                            <td>{{ label.received }}</td>
-                            <td>{{ label.notes }}</td>
-                            <td>{{ label.due_date }}</td>
-                            <td><a href="{% url 'budget:edit_label' label.id %}">
-                                <button class="btn shadow button-color border-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                    </svg>&nbsp;&nbsp;Edit
-                                </button>
-                            </a></td>
-                            <td><a href="{% url 'budget:delete_label' label.id %}">
-                                <button class="btn shadow button-delete border-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                    </svg>&nbsp;&nbspDelete
-                                </button>
-                            </a></td>
-                        {% endif %}
-                    </tr>
+                    {% if label.category == category %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-2 mb-3">
+                                    <span class="text-dark h4">{{ label.label }}</span>
+                                </div>
+                                <div class="col-lg-2  mb-3">
+                                    <span class="text-dark h4">{{ label.planned }}</span>
+                                </div>
+                                <div class="col-lg-2  mb-3">
+                                    <span class="text-dark h4">{{ label.received }}</span>
+                                </div>
+                                <div class="col-lg-2  mb-3">
+                                    <span class="text-dark h4">{{ label.notes }}</span>
+                                </div>
+                                <div class="col-lg-2  mb-3">
+                                    <span class="text-dark h4">{{ label.due_date }}</span>
+                                </div>
+
+                                <div class="col-lg-1 d-flex justify-content-end">
+                                    <a href="{% url 'budget:edit_label' label.id %}">
+                                        <button class="btn shadow button-color border-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-1">
+                                    <a href="{% url 'budget:delete_label' label.id %}">
+                                        <button class="btn shadow button-delete border-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-trash4" viewBox="0 0 16 16">
+                                                <path d="M6.5 1h4a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
-                <tr>
-                    <td>Totals:</td>
-                    <td>{{ total_planned }}</td>
-                    <td>{{ total_received }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <hr>
+                <hr class="hr pt-5 mb-0"/>
+            </div>
+
+
             <div class="d-flex justify-content-center">
                 <a href="{% url 'budget:make-label' category.id %}">
-                    <button class="btn shadow button-color border-0">Add Sub-Category</button>
+                    <button class="btn shadow button-color border-0 py-3 px-5 main-button">Add Sub-Category</button>
                 </a>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 </body>
