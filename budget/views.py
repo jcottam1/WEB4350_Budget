@@ -286,10 +286,11 @@ def delete_transaction(request, id):
     transaction = Transaction.objects.get(id=id)
 
     if request.method == "POST":
-        transaction.delete()
-        return redirect('budget:transactions')
+        transaction.deleted_status = not transaction.deleted_status
+        transaction.save()
+        return redirect('budget:view_transactions', transaction.label.category.budget.id)
 
-    return render(request, 'budget/delete.html', {'transaction': transaction})
+    return render(request, 'budget/delete_transaction.html', {'transaction': transaction})
 
 def view_transactions(request, id):
     transactions = Transaction.objects.all()

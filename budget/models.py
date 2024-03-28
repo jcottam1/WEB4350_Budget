@@ -1,3 +1,4 @@
+# noinspection PyPackageRequirements
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -57,6 +58,7 @@ class Transaction(models.Model):
     outgoing = models.BooleanField(default=False)
     transaction_name = models.CharField(max_length=100)
     date = models.DateField()
+    deleted_status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.transaction_name

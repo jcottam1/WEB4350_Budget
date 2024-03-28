@@ -1,0 +1,13 @@
+{% extends 'budget/base.html' %}
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    {% if transaction.deleted_status == False %}
+        <h1>Do you want to delete?</h1>
+        <button type="submit">Delete</button>
+    {% elif transaction.deleted_status == True %}
+        <h1>Do you want to undo delete?</h1>
+        <button type="submit">Undo Delete</button>
+    {% endif %}
+</form>
+{% endblock %}

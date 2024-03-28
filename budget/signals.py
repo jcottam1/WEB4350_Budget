@@ -9,29 +9,42 @@ def change_transaction(sender, instance, **kwargs):
         budget = instance.label.category.budget
         old_transaction = Transaction.objects.get(pk=instance.id)
         if instance.incoming == True:
-            budget.total_budget = budget.total_budget - old_transaction.amount
+            if instance.deleted_status == True and instance.deleted_status != old_transaction.deleted_status:
+                budget.total_budget = budget.total_budget + instance.amount
+            elif instance.deleted_status == False and instance.deleted_status != old_transaction.deleted_status:
+                budget.total_budget = budget.total_budget - instance.amount
+            else:
+                budget.total_budget = budget.total_budget + old_transaction.amount
+                instance.label.received = instance.label.received - old_transaction.amount
+                instance.label.category.received = instance.label.category.received - old_transaction.amount
+                instance.label.save()
             budget.save()
         else:
-            budget.total_budget = budget.total_budget + old_transaction.amount
+            if instance.deleted_status == True and instance.deleted_status != old_transaction.deleted_status:
+                budget.total_budget = budget.total_budget + old_transaction.amount
+            elif instance.deleted_status == False and instance.deleted_status != old_transaction.deleted_status:
+                budget.total_budget = budget.total_budget - old_transaction.amount
+            else:
+                instance.label.received = instance.label.received - old_transaction.amount
+                instance.label.category.received = instance.label.category.received - old_transaction.amount
+                instance.label.save()
             budget.save()
-        instance.label.received = instance.label.received - old_transaction.amount
-        instance.label.category.received = instance.label.category.received - old_transaction.amount
-        instance.label.save()
 
 
 @receiver(post_save, sender=Transaction)
-def add_label(sender, instance, **kwargs):
-    budget = instance.label.category.budget
-    if instance.incoming == True:
-        budget.total_budget = instance.amount + budget.total_budget
-        budget.save()
-    else:
-        budget.total_budget = budget.total_budget - instance.amount
-        budget.save()
+def add_transaction(sender, instance, created, **kwargs):
+    if created:
+        budget = instance.label.category.budget
+        if instance.incoming == True:
+            budget.total_budget = instance.amount + budget.total_budget
+            budget.save()
+        else:
+            budget.total_budget = budget.total_budget - instance.amount
+            budget.save()
 
-    instance.label.received = instance.label.received + instance.amount
-    instance.label.category.received = instance.label.category.received + instance.amount
-    instance.label.save()
+        instance.label.received = instance.label.received + instance.amount
+        instance.label.category.received = instance.label.category.received + instance.amount
+        instance.label.save()
 
 
 @receiver(pre_save, sender=BudgetLabel)
