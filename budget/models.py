@@ -47,6 +47,7 @@ class BudgetLabel(models.Model):
     received = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     due_date = models.DateField()
     notes = models.CharField(max_length=100, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.label
@@ -59,6 +60,5 @@ class Transaction(models.Model):
     transaction_name = models.CharField(max_length=100)
     date = models.DateField()
     deleted_status = models.BooleanField(default=False)
-
     def __str__(self):
         return self.transaction_name

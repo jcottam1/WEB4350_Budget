@@ -204,6 +204,7 @@ def make_label(request, id):
         if form.is_valid():
             f = form.save(commit=False)
             f.category = BudgetCategory.objects.get(id=id)
+            f.user = request.user
             f.save()
             return redirect('budget:view_category', id)
     else:
@@ -216,6 +217,7 @@ def edit_label(request, id):
     form = BudgetLabelForm(request.POST or None, instance=label)
     if form.is_valid():
         f = form.save(commit=False)
+        f.user = request.user
         f.save()
         return redirect('budget:view_category', label.category.id)
     else:
@@ -260,12 +262,14 @@ def transactions(request):
 def make_transaction(request):
     if request.method == "POST":
         form = TransactionForm(request.POST, request.FILES)
+        form.fields['label'].queryset = BudgetLabel.objects.filter(user=request.user)
         if form.is_valid():
             f = form.save(commit=False)
             f.save()
             return redirect('budget:view_transactions', f.label.category.budget.id)
     else:
         form = TransactionForm()
+        form.fields['label'].queryset = BudgetLabel.objects.filter(user=request.user)
     return render(request, 'budget/form.html', {"form": form})
 
 @login_required(login_url='login')
@@ -274,6 +278,7 @@ def edit_transaction(request, id):
     form = TransactionForm(request.POST or None, instance=transaction)
     if form.is_valid():
         f = form.save(commit=False)
+        f.user = request.user
         f.save()
         return redirect('budget:view_transactions', transaction.label.category.budget.id)
     else:
