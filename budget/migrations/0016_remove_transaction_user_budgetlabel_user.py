@@ -12,11 +12,3 @@ class Migration(migrations.Migration):
         ('budget', '0015_transaction_user'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='budgetlabel',
-            name='user',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-            preserve_default=False,
-        ),
-    ]

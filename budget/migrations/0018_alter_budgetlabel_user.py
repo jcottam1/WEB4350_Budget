@@ -12,10 +12,4 @@ class Migration(migrations.Migration):
         ('budget', '0017_alter_budgetlabel_user'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='budgetlabel',
-            name='user',
-            field=models.ForeignKey(blank=True, default=1, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-        ),
-    ]
+
