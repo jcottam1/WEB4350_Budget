@@ -13,10 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='transaction',
-            name='user',
-        ),
         migrations.AddField(
             model_name='budgetlabel',
             name='user',
