@@ -22,6 +22,7 @@ MONTH_CHOICES = (
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     budget_name = models.CharField(max_length=100)
+    original_budget = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     total_budget = models.DecimalField(max_digits=10, decimal_places=2)
     new_month = models.CharField(choices=MONTH_CHOICES,blank=True, null=True, max_length=100)
     year = models.IntegerField(blank=True, null=True)

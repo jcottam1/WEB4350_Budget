@@ -1,0 +1,32 @@
+{% extends 'budget/base.html' %}
+
+{% block body %}
+    {# SMALL CARD 2 - REMAINING BALANCE #}
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="border-top-0 h5" scope="col" colspan="2">Remaining Spending Balances</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Original Budget Amount</td>
+                        <td><strong>{{ original_budget }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Total Amount Spent</td>
+                        <td><strong>{{ total_spent }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Total Amount Remaining</td>
+                        <td><strong>{{ budget.total_budget }}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

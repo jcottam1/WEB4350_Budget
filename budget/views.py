@@ -122,11 +122,13 @@ def view_budget(request, id):
     income_transactions = Transaction.objects.filter(incoming=True)
     budgets = Budget.objects.all()
     cateogries = BudgetCategory.objects.all()
+
     context = {
         'budget': budget,
         'income_transactions':income_transactions,
         'budgets': budgets,
-        'categories': cateogries
+        'categories': cateogries,
+        'original_budget': budget.original_budget,
     }
     return render(request, 'budget/view_budget.html', context)
 
@@ -137,11 +139,17 @@ def view_report(request, id):
     budget = Budget.objects.get(id=id)
     budgets = Budget.objects.all()
     categories = BudgetCategory.objects.all()
+    total_spent = \
+    Transaction.objects.filter(label__category__budget=budget, outgoing=True).aggregate(total=Sum('amount'))['total']
+    total_budget = budget.total_budget
     context = {
         'budget': budget,
         'budgets': budgets,
         'categories': categories,
+        'total_spent': total_spent,
+        'total_budget': total_budget,
     }
+
     return render(request, 'budget/view_report.html', context)
 
 
@@ -306,3 +314,25 @@ def view_transactions(request, id):
     }
     return render(request, 'budget/view_transactions.html', context)
 
+def update_budget(transaction):
+    # Retrieve the budget associated with the transaction
+    budget = transaction.label.category.budget
+    if transaction.outgoing:
+        # If the transaction is outgoing, decrease the budget category's planned amount
+        budget_category = transaction.label.category
+        budget_category.planned -= transaction.amount
+        budget_category.save()
+
+        # Decrease the total budget accordingly
+        budget.total_budget -= transaction.amount
+    elif transaction.incoming:
+        # If the transaction is incoming, increase the budget category's planned amount
+        budget_category = transaction.label.category
+        budget_category.planned += transaction.amount
+        budget_category.save()
+
+        # Increase the total budget accordingly
+        budget.total_budget += transaction.amount
+
+    # Save the updated budget
+    budget.save()
