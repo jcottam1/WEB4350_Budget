@@ -40,8 +40,8 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 {% for budget in budgets %}
                                     {% if budget.user == user %}
-                                        <a class="dropdown-item"
-                                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }}</a>
+                                        <h1 class="dropdown-item"
+                                           href="{% url 'budget:view_budget' budget.id %}">{{ budget.budget_name }} {{ budget.y }}</h1>
                                     {% endif %}
                                 {% endfor %}
                             </div>
