@@ -28,10 +28,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Original Budget Amount</td>
-                            <td><strong>{{ original_budget }}</strong></td>
-                        </tr>
+
                         <tr>
                             <td>Total Amount Spent</td>
                             <td><strong>{{ total_spent }}</strong></td>
@@ -45,5 +42,49 @@
                 </div>
             </div>
         </div>
+        <h2 class="mt-5 pb-3">Categories</h2>
+            <div class="card shadow border-0">
+                <div class="card-body">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h3>Budget Categories</h3>
+                            </div>
+                            <div class="col-lg-2">
+                                <h3>Budgeted</h3>
+                            </div>
+                            <div class="col-lg-2">
+                                <h3>Spent</h3>
+                            </div>
+                            <div class="col-lg-2">
+                                <h3>Remaining</h3>
+                            </div>
+                        </div>
+                        <hr class="hr pt-1 pb-1"/>
+
+                        {% for category in categories %}
+                            {% if category.budget == budget %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-3">
+                                            <a href="{% url 'budget:view_category' category.id %}"
+                                               class="link-primary h4">{{ category.category_name }}</a>
+                                        </div>
+                                        <div class="col-lg-2  mb-3">
+                                            <span class="text-dark h4">{{ category.planned }}</span>
+                                        </div>
+                                        <div class="col-lg-2  mb-3 d-flex justify-content-end">
+                                            <span class="text-dark h4">{{ category.received }}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <hr class="hr pt-5 mb-0"/>
+                    </div>
+                </div>
+            </div>
 </div>
 {% endblock %}

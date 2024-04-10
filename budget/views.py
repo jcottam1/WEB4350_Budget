@@ -128,7 +128,6 @@ def view_budget(request, id):
         'income_transactions':income_transactions,
         'budgets': budgets,
         'categories': cateogries,
-        'original_budget': budget.original_budget,
     }
     return render(request, 'budget/view_budget.html', context)
 
@@ -139,8 +138,7 @@ def view_report(request, id):
     budget = Budget.objects.get(id=id)
     budgets = Budget.objects.all()
     categories = BudgetCategory.objects.all()
-    total_spent = \
-    Transaction.objects.filter(label__category__budget=budget, outgoing=True).aggregate(total=Sum('amount'))['total']
+    total_spent = Transaction.objects.filter(label__category__budget=budget, outgoing=True).aggregate(total=Sum('amount'))['total']
     total_budget = budget.total_budget
     context = {
         'budget': budget,
@@ -200,8 +198,7 @@ def view_category(request, id):
         'category': category,
         'labels': labels,
         'total_planned': total_planned,
-        'total_received': total_received
-
+        'total_received': total_received,
     }
     return render(request, 'budget/view_category.html', context)
 

@@ -14,7 +14,7 @@ def login_view(request):
             messages.success(request, 'Logged in successfully')
             return redirect('budget:index')
         else:
-            messages.error(request, 'Logged in Fail')
+            messages.error(request, 'Login Failed')
 
     context = {
         'nbar': 'login'
