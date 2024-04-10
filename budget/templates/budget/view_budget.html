@@ -56,9 +56,9 @@
 
         <br>
         {% if budget.user == user %}
-            <p>Budget: {{ budget.budget_name }} <a href="{% url 'budget:dashboard' budget.id %}">
+            <h1>{{ budget.budget_name }} {{budget.year}} <a href="{% url 'budget:dashboard' budget.id %}">
                 <button class="btn shadow button-color border-0 py-3 px-5 main-button">View Dashboard</button>
-            </a></p>
+            </a></h1>
             <h2 class="pb-3">Planned Income</h2>
             <div class="card shadow border-0">
                 <div class="card-body">
