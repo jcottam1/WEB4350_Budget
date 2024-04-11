@@ -27,35 +27,6 @@
             <button class="btn shadow button-color border-0 py-3 px-5 main-button">View Budget</button>
         </a></p>
 
-        {# SMALL CARD 1 - CURRENT BALANCES #}
-        <div class="row mb-5">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th class="border-top-0 h5" scope="col">Current Balances</th>
-                                <th class="border-top-0" scope="col"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Current Balances</td>
-                                <td><strong>? $0.00</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="border-top-0">Savings</td>
-                                <td class="border-top-0"><strong>? $0.00</strong></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-
             {# SMALL CARD 2 - REMAINING BALANCE #}
             <div class="col-sm-6">
                 <div class="card">
@@ -169,7 +140,7 @@
                 <hr>
                 <div class="d-flex justify-content-center">
                     <a href="{% url 'budget:make_transaction' %}">
-                        <button class="btn shadow button-color border-0 py-3 px-5 main-button">Create Transaction
+                        <button class="btn shadow button-color border-0 py-3 px-5 main-button">Add Transaction
                         </button>
                     </a>
                 </div>

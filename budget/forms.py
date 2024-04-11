@@ -66,7 +66,7 @@ class TransactionForm(forms.ModelForm):
 
         labels = {
             'transaction_name': 'Transaction Name',
-            'label': 'Label',
+            'label': 'Category Type',
             'amount': 'Amount',
             'incoming': 'Incoming',
             'outgoing': 'Outgoing',
@@ -84,7 +84,7 @@ class TransactionForm(forms.ModelForm):
             }),
             'amount': NumberInput(attrs={
                 'class': "form-control w-100 shadow border-0",
-                'placeholder': ''
+                'placeholder': '$0.00'
             }),
             'incoming': CheckboxInput(attrs={
                 'class': "h-100"
@@ -94,7 +94,7 @@ class TransactionForm(forms.ModelForm):
                 'placeholder': ''
             }),
             'date': DateInput(attrs={
-                'class': "form-control w-100 shadow border-0"
+                'class': "form-control w-100 shadow border-0",
             })
         }
 

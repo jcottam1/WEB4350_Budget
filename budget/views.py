@@ -312,24 +312,18 @@ def view_transactions(request, id):
     return render(request, 'budget/view_transactions.html', context)
 
 def update_budget(transaction):
-    # Retrieve the budget associated with the transaction
     budget = transaction.label.category.budget
     if transaction.outgoing:
-        # If the transaction is outgoing, decrease the budget category's planned amount
         budget_category = transaction.label.category
         budget_category.planned -= transaction.amount
         budget_category.save()
 
-        # Decrease the total budget accordingly
         budget.total_budget -= transaction.amount
     elif transaction.incoming:
-        # If the transaction is incoming, increase the budget category's planned amount
         budget_category = transaction.label.category
         budget_category.planned += transaction.amount
         budget_category.save()
 
-        # Increase the total budget accordingly
         budget.total_budget += transaction.amount
 
-    # Save the updated budget
     budget.save()
